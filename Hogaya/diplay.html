@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Display Profile</title>
+<link rel="stylesheet" href="display.css">
+</head>
+<body>
+<div class="container">
+<h2>User Profile</h2>
+
+<div class="profile-pic-container">
+  <img id="profilePicDisplay" src="default-avatar.png" alt="Profile Photo">
+</div>
+
+<div class="top-row">
+  <input type="text" id="nameDisplay" readonly>
+  <input type="number" id="ageDisplay" readonly>
+</div>
+
+<div class="skills-box">
+  <label>Skills I Can Share</label>
+  <div class="skills-list" id="shareListDisplay"></div>
+</div>
+
+<div class="skills-box">
+  <label>Skills I Want to Learn</label>
+  <div class="skills-list" id="learnListDisplay"></div>
+</div>
+
+<div class="back-btn-container">
+  <button onclick="goBack()">Back to Edit Profile</button>
+</div>
+</div>
+
+<script>
+const name = localStorage.getItem("name");
+const age = localStorage.getItem("age");
+const profilePhoto = localStorage.getItem("profilePhoto") || "default-avatar.png";
+const shareSkills = JSON.parse(localStorage.getItem("shareSkills")) || [];
+const learnSkills = JSON.parse(localStorage.getItem("learnSkills")) || [];
+
+document.getElementById('nameDisplay').value = name || "";
+document.getElementById('ageDisplay').value = age || "";
+document.getElementById('profilePicDisplay').src = profilePhoto;
+
+function createSkillTag(skill) {
+  const div = document.createElement('div');
+  div.className = 'skill-tag';
+  div.textContent = skill;
+  return div;
+}
+
+shareSkills.forEach(skill => document.getElementById('shareListDisplay').appendChild(createSkillTag(skill)));
+learnSkills.forEach(skill => document.getElementById('learnListDisplay').appendChild(createSkillTag(skill)));
+
+function goBack() {
+  window.location.href = "profile.html";
+}
+</script>
+</body>
+</html>
