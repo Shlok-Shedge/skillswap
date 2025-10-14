@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profile Page</title>
+<link rel="stylesheet" href="profile.css">
+</head>
+<body>
+<div class="profile-container">
+  <div class="profile-top">
+    <div class="profile-pic">
+      <input type="file" id="upload" accept="image/*">
+      <label for="upload" id="upload-label">+</label>
+      <img id="profileImage" src="default-avatar.png" alt="">
+    </div>
+    <div class="profile-info">
+      <input type="text" id="name" placeholder="Your Name">
+      <input type="number" id="age" placeholder="Your Age">
+      <button id="removePhotoBtn">Remove Photo</button>
+    </div>
+  </div>
+
+  <div class="skills-section">
+    <h3>What I Can Share !</h3>
+    <div class="skills-list" id="shareSkills"></div>
+    <div class="skills-input-container">
+      <input type="text" id="shareInput" placeholder="Add a skill">
+      <button onclick="addSkill('share')">Add</button>
+    </div>
+  </div>
+
+  <div class="skills-section">
+    <h3>What I Am Looking For !</h3>
+    <div class="skills-list" id="learnSkills"></div>
+    <div class="skills-input-container">
+      <input type="text" id="learnInput" placeholder="Add a skill">
+      <button onclick="addSkill('learn')">Add</button>
+    </div>
+  </div>
+
+  <button onclick="saveProfile()">Go to Display Page</button>
+</div>
+
+<script src="profile.js"></script>
+</body>
+</html>
