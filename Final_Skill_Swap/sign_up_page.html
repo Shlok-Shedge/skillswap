@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="sign_up_page.css">
+</head>
+<body>
+    <div class="container">
+        <form class="signup-form">
+            <h2>Sign Up</h2>
+            <p>Please fill in this form to create an account!</p>
+            <hr>
+
+            <!-- First & Last Name -->
+            <div class="name-fields">
+                <input type="text" placeholder="First Name" required>
+                <input type="text" placeholder="Last Name" required>
+            </div>
+
+            <!-- Mobile Number -->
+            <input type="text" placeholder="Mobile Number" required>
+
+            <!-- Email -->
+            <input type="email" placeholder="Email" required>
+
+            <!-- Password & Confirm Password -->
+            <input type="password" placeholder="Password" required>
+            <input type="password" placeholder="Confirm Password" required>
+
+            <!-- Terms & Privacy -->
+            <label class="checkbox-container">
+                <input type="checkbox" required>
+                I accept the&nbsp;<a href="#">Terms of Use</a> &nbsp;&&nbsp; <a href="#">Privacy Policy</a>.
+            </label>
+
+            <!-- Submit Button -->
+            <button type="submit" class="signup-btn">Sign Up</button>
+
+            <!-- Login Link -->
+            <p class="login-text">Already have an account? <a href="#">Login here.</a></p>
+        </form>
+    </div>
+</body>
+</html>
