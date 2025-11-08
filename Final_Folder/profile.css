@@ -1,0 +1,303 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #011436;
+  background-color: #e5e7f1;
+  line-height: 1.6;
+  overflow-x: hidden;
+  background:url(displaybackground.png) ;
+}
+
+/* Background Blur */
+.blur-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url(homebackground.png) no-repeat center center/cover;
+  filter: blur(10px);
+  z-index: -1;
+  opacity: 0.8;
+}
+
+/* Header */
+header {
+  background-color: #011436;
+  color: white;
+  text-align: center;
+  padding: 25px 0;
+}
+
+.header-container {
+  position: relative;
+}
+
+.logo {
+  width: 80px;
+  height: 80px;
+  position: absolute;
+  left: 25px;
+  top: -10px;
+}
+
+    .sidebar {
+      width: 250px;
+      background-color: #e9ecef;
+      padding: 20px;
+      position: fixed;
+      top: 80px;
+      left: 0;
+      height: calc(100% - 80px);
+      border-right: 2px solid #011436;
+    }
+
+    .sidebar h3 {
+      text-align: center;
+      color: #011436;
+      margin-bottom: 15px;
+    }
+
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .sidebar li {
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
+
+header h1 {
+  font-family: 'Lobster', cursive;
+  font-size: 2.5rem;
+}
+
+header p {
+  font-size: 1rem;
+  color: #ccc;
+}
+
+/* Main Content */
+main {
+  max-width: 900px;
+  margin: 40px auto 80px;
+  background: rgba(255, 255, 255, 0.85);
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Profile Header */
+.profile-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.profile-pic {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 4px solid #011436;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+
+.username {
+  color: #555;
+  font-style: italic;
+}
+
+.tagline {
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.edit-btn {
+  background-color: #011436;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 20px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.edit-btn:hover {
+  background-color: #133b8a;
+}
+
+/* About Section */
+.about {
+  margin: 30px 0;
+}
+
+.about h3 {
+  font-family: 'Lobster', cursive;
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+}
+
+.about p {
+  font-size: 1.1rem;
+}
+
+/* Skills Section */
+.skills {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 30px 0;
+}
+
+.skill-group {
+  flex: 1;
+  min-width: 250px;
+  margin: 10px;
+}
+
+.skill-group h3 {
+  font-family: 'Lobster', cursive;
+  font-size: 1.6rem;
+  margin-bottom: 10px;
+}
+
+.skill-group ul {
+  list-style-type: none;
+}
+
+.skill-group li {
+  background-color: #011436;
+  color: white;
+  padding: 8px 12px;
+  margin: 5px 0;
+  border-radius: 8px;
+  display: inline-block;
+}
+
+/* Reviews Section */
+.reviews {
+  margin: 30px 0;
+}
+
+.reviews h3 {
+  font-family: 'Lobster', cursive;
+  font-size: 1.8rem;
+  margin-bottom: 15px;
+}
+
+.review-card {
+  background: rgba(255, 255, 255, 0.9);
+  border-left: 4px solid #011436;
+  padding: 15px 20px;
+  margin-bottom: 15px;
+  border-radius: 10px;
+}
+
+/* Achievements Section */
+.achievements {
+  margin: 30px 0;
+}
+
+.achievements h3 {
+  font-family: 'Lobster', cursive;
+  font-size: 1.8rem;
+  margin-bottom: 15px;
+}
+
+.badge-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.badge {
+  background-color: #011436;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 12px;
+  font-weight: bold;
+}
+
+/* Contact Section */
+.contact {
+  margin-top: 30px;
+}
+
+.contact h3 {
+  font-family: 'Lobster', cursive;
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+}
+
+.contact ul {
+  list-style: none;
+  margin-bottom: 15px;
+}
+
+.contact li {
+  margin-bottom: 8px;
+}
+
+.message-btn {
+  background-color: #1a2295c5;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.message-btn:hover {
+  background-color: #011436;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  background-color: #011436;
+  color: white;
+  padding: 20px 0;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+/* Action Buttons (Accept / Reject) */
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.send-btn {
+  background-color: #017b45;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.send-btn:hover {
+  background-color: #015b34;
+}
+
+.reject-btn {
+  background-color: #c82333;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.reject-btn:hover {
+  background-color: #a71d2a;
+}

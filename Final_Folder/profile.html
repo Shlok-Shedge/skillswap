@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Profile | SkillSwap</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="profile.css">
+</head>
+<body>
+
+  <!-- Background Blur -->
+  <div class="blur-bg"></div>
+
+  <!-- Header -->
+  <header>
+    <div class="header-container">
+      <img src="logo.png" alt="SkillSwap Logo" class="logo">
+      <h1>SkillSwap</h1>
+      <p>Share what you know, learn what you love.</p>
+    </div>
+  </header>
+
+  <!-- Profile Section -->
+  <main>
+    <section class="profile-header">
+      <img src="user1.jpg" alt="User Photo" class="profile-pic">
+      <h2>Mani Reddy</h2>
+      <p class="username">@manireddy</p>
+      <p class="tagline">Web Developer | Lifelong Learner | Tech Enthusiast</p>
+      <button class="edit-btn">Edit Profile</button>
+    </section>
+
+    <!-- About Section -->
+    <section class="about">
+      <h3>About Me</h3>
+      <p>
+        Passionate about creating interactive web applications and helping others learn programming. 
+        I love collaborating with fellow learners to exchange knowledge and ideas. 
+        On SkillSwap, I teach <b>HTML, CSS, and JavaScript</b> while learning <b>UI/UX Design</b> and <b>ReactJS</b>.
+      </p>
+    </section>
+
+    <!-- Skills Section -->
+    <section class="skills">
+      <div class="skill-group">
+        <h3>Skills I Offer</h3>
+        <ul>
+          <li>HTML & CSS</li>
+          <li>JavaScript</li>
+          <li>Responsive Design</li>
+        </ul>
+      </div>
+
+      <div class="skill-group">
+        <h3>Skills I Want to Learn</h3>
+        <ul>
+          <li>ReactJS</li>
+          <li>UI/UX Design</li>
+          <li>Backend Development</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section class="reviews">
+      <h3>Reviews</h3>
+      <div class="review-card">
+        <p>“Mani is an amazing mentor! His explanation of HTML and CSS was clear and practical.”</p>
+        <span>- Shlok Shedge ⭐⭐⭐⭐⭐</span>
+      </div>
+      <div class="review-card">
+        <p>“Very patient and knowledgeable. Loved learning JavaScript from him.”</p>
+        <span>- Dhrumil Rughani ⭐⭐⭐⭐☆</span>
+      </div>
+    </section>
+
+    <!-- Achievements Section -->
+    <section class="achievements">
+      <h3>Achievements & Badges</h3>
+      <div class="badge-container">
+        <div class="badge">🏅 Top Mentor</div>
+        <div class="badge">🎯 10+ Skill Swaps</div>
+        <div class="badge">💬 Community Helper</div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+<section class="contact">
+  <h3>Connect with Me</h3>
+  <ul>
+    <li><b>Email:</b> reddymani959@gmail.com</li>
+    <li><b>LinkedIn:</b> linkedin.com/in/manireddy</li>
+    <li><b>GitHub:</b> github.com/manireddy</li>
+  </ul>
+
+  <div class="action-buttons">
+    <button class="message-btn">Send Message</button>
+    <button class="Send-btn">Send Request</button>
+    <button class="reject-btn">Reject Request</button>
+  </div>
+</section>
+
+<script>
+    // Example JavaScript logic (optional for now)
+document.querySelector(".accept-btn").addEventListener("click", () => {
+  alert("You have accepted the skill swap request!");
+});
+
+document.querySelector(".reject-btn").addEventListener("click", () => {
+  alert("You have rejected the skill swap request.");
+});
+
+</script>
