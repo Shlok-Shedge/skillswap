@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SkillSwap Chat</title>
+  <link rel="stylesheet" href="skillswapchat.css" />
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="main-header">
+    <div class="header-content">
+      <img src="logo.png" class="logo" alt="Logo" />
+      <div class="header-text">
+        <h1>SkillSwap</h1>
+        <p>Connect • Learn • Share</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <div class="main-container">
+
+    <!-- LEFT SIDEBAR (Profiles) -->
+    <div class="chat-list">
+      <h2 class="chat-room-title">Chat Room</h2>
+      <div class="search-bar">
+        <input type="text" placeholder="Search..." />
+      </div>
+
+      <!-- Profile List -->
+      <div class="chat-preview active" data-name="Mani Reddy">
+        <img src="profile1.jpg" class="chat-avatar" />
+        <h4>Mani Reddy</h4>
+      </div>
+
+      <div class="chat-preview" data-name="Shlok J">
+        <img src="profile2.jpg" class="chat-avatar" />
+        <h4>Shlok J</h4>
+      </div>
+
+      <div class="chat-preview" data-name="Vaishali">
+        <img src="profile3.jpg" class="chat-avatar" />
+        <h4>Vaishali</h4>
+      </div>
+
+      <div class="chat-preview" data-name="Dhruv">
+        <img src="profile4.jpg" class="chat-avatar" />
+        <h4>Dhruv</h4>
+      </div>
+
+      <div class="chat-preview" data-name="Meta AI">
+        <img src="profile5.jpg" class="chat-avatar" />
+        <h4>Meta AI</h4>
+      </div>
+    </div>
+
+    <!-- RIGHT CHAT SECTION -->
+    <div class="chat-section">
+      <div class="profile-header">
+        <img src="profile1.jpg" class="profile-img" id="chat-avatar" />
+        <span class="profile-name" id="chat-name">Mani Reddy</span>
+      </div>
+
+      <div class="chat-box" id="chatBox"></div>
+
+      <form id="chatForm" class="chat-input">
+        <input id="userInput" type="text" placeholder="Type a message..." autocomplete="off" />
+        <button type="submit" id="sendBtn">Send</button>
+      </form>
+    </div>
+
+  </div>
+
+  <!-- ✅ JavaScript -->
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const sendBtn = document.getElementById("sendBtn");
+    const userInput = document.getElementById("userInput");
+    const chatBox = document.getElementById("chatBox");
+    const profileNameEl = document.querySelector(".profile-name");
+    const profileImgEl = document.querySelector(".profile-img");
+    const chatPreviews = document.querySelectorAll(".chat-preview");
+
+    // Chat history for each profile
+    const chats = {};
+    chatPreviews.forEach(preview => {
+      const name = preview.dataset.name.trim();
+      chats[name] = [];
+    });
+
+    // Default active chat
+    let activeChat = "Mani Reddy";
+
+    // Unique bot replies
+    const botReplies = {
+      "Mani Reddy": "Hey, Mani here 👋 What’s up?",
+      "Shlok J": "Hey, this is Shlok! How can I assist?",
+      "Vaishali": "Hi, Vaishali will reply shortly 😊",
+      "Dhruv": "Yo, Dhruv here — ready to talk 💬",
+      "Meta AI": "🤖 Meta AI online — Ask me anything!",
+    };
+
+    // Escape HTML safely
+    function escapeHtml(text) {
+      const div = document.createElement("div");
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    // Load messages
+    function loadChat(name) {
+      chatBox.innerHTML = "";
+      (chats[name] || []).forEach(msg => appendMessage(msg.text, msg.sender, false));
+    }
+
+    // Append message
+    function appendMessage(text, sender, save = true) {
+      if (!activeChat) return;
+      if (save) chats[activeChat].push({ text, sender });
+
+      const wrapper = document.createElement("div");
+      wrapper.className = `message ${sender}`;
+      wrapper.innerHTML =
+        sender === "user"
+          ? `<div class="bubble">${escapeHtml(text)}</div>
+             <img src="https://via.placeholder.com/40/4a90e2/ffffff?text=U" class="profile">`
+          : `<img src="https://via.placeholder.com/40/ff4b4b/ffffff?text=B" class="profile">
+             <div class="bubble">${escapeHtml(text)}</div>`;
+      chatBox.appendChild(wrapper);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    // Switch between profiles
+    chatPreviews.forEach(preview => {
+      preview.addEventListener("click", () => {
+        document.querySelector(".chat-preview.active")?.classList.remove("active");
+        preview.classList.add("active");
+
+        activeChat = preview.dataset.name;
+        profileNameEl.textContent = activeChat;
+        profileImgEl.src = preview.querySelector("img").src;
+
+        loadChat(activeChat);
+      });
+    });
+
+    // Handle message send
+    document.getElementById("chatForm").addEventListener("submit", e => {
+      e.preventDefault();
+      const msg = userInput.value.trim();
+      if (!msg) return;
+
+      appendMessage(msg, "user");
+      userInput.value = "";
+
+      // Bot reply (unique per profile)
+      setTimeout(() => {
+        const reply = botReplies[activeChat] || "I'll reply soon!";
+        appendMessage(reply, "bot");
+      }, 600);
+    });
+
+    // Initialize default chat
+    loadChat(activeChat);
+  });
+  </script>
+</body>
+</html>
