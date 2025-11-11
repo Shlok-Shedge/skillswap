@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<!-- saved from url=(0057)file:///C:/Users/admin/OneDrive/Desktop/Skill%20Swap.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <title>Skill Swap</title>
+
+  <!-- ==========================
+       ORIGINAL CSS (kept intact)
+       (I preserved your CSS blocks; I appended notification CSS later.)
+       ========================== -->
+  <style>
+    /* ---------------- General Page Setup ---------------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: rgba(0,0,0,0); /* ✅ Prevent black click flash */
+    }
+
+    html, body {
+      height: 100%; 
+    }
+
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: url('homebackground.png') no-repeat center center fixed;
+      background-size: cover;
+      color: #333;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ---------------- Logo ---------------- */
+    .logo {
+      width: 80px;
+      height: auto;
+      position: absolute;
+      top: 50%;
+      left: 20px;
+      transform: translateY(-50%);
+      pointer-events: none; /* ✅ Logo won’t trigger highlight */
+    }
+
+    /* ---------------- Header ---------------- */
+    header {
+      background-color: #011436;
+      color: #fff;
+      padding: 20px 0;
+      text-align: center;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+    }
+
+    .header-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .header-title {
+      font-size: 32px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    /* ---------------- Navbar ---------------- */
+    nav {
+      background: #1a2295c5;
+      padding: 18px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      position: fixed;
+      top: 117px;
+      width: 100%;
+      z-index: 999;
+    }
+
+    .nav-left a {
+      color: #fff;
+      margin-right: 15px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s ease;
+    }
+
+    .nav-left a:hover {
+      text-decoration: underline;
+      color: #00bf72;
+    }
+
+    /* ---------- Notification bell space: minimal styling (safe) ---------- */
+    .nav-right {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .notif-toggle {
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.06);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.08);
+      transition: background .18s, transform .12s;
+      user-select: none;
+      position: relative;
+    }
+    .notif-toggle:hover { transform: translateY(-1px); background: rgba(255,255,255,0.09); }
+
+    /* unread badge */
+    .notif-badge {
+      position: absolute;
+      top: -6px;
+      right: -6px;
+      min-width: 18px;
+      height: 18px;
+      padding: 0 5px;
+      border-radius: 9px;
+      background: #ef4444;
+      color: white;
+      font-size: 12px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.35);
+    }
+
+    /* ---------------- Main Content (kept as before) ---------------- */
+    .main {
+      text-align: center;
+      padding: 150px 20px 10px;
+    }
+
+    .main h1 {
+      margin-top: 50px;
+      margin-bottom: 10px;
+      color: black;
+    }
+
+    .main p {
+      color: black;
+      margin-bottom: 0px; 
+    }
+
+    /* ---------------- Profile Cards ---------------- */
+    .profiles {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 30px;
+    }
+
+    .card {
+      background: linear-gradient(to bottom right, #ffffff, #f4fdfb);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      width: 300px;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      will-change: transform;
+      user-select: none;
+      -webkit-user-drag: none;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation; /* ✅ disables overlay highlight completely */
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    /* ✅ Full color fix — prevent black or dark overlay on click */
+    .card:active,
+    .card:focus,
+    .card:visited {
+      background: linear-gradient(to bottom right, #ffffff, #f4fdfb) !important;
+      color: #007a7a !important;
+      outline: none !important;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
+    }
+
+    /* Text inside cards */
+    .card h3 {
+      margin-top: 0;
+      color: #007a7a;
+    }
+
+    .card p {
+      margin: 10px 0;
+      color: #444;
+    }
+
+    /* Buttons */
+    .card button {
+      margin-top: 15px;
+      padding: 10px 15px;
+      background: linear-gradient(to right, #00a896, #00bf72);
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      color: #fff;
+      font-weight: 600;
+      transition: background 0.3s ease;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+
+    .card button:hover {
+      background: linear-gradient(to right, #028090, #00a896);
+    }
+
+    /* ✅ Button color fix after click */
+    .card button:active,
+    .card button:focus,
+    .card button:visited {
+      background: linear-gradient(to right, #00a896, #00bf72) !important;
+      color: #fff !important;
+      outline: none !important;
+      box-shadow: none !important;
+    }
+
+    /* Remove default link behaviors */
+    a,
+    a:visited,
+    a:active {
+      color: white !important;
+      text-decoration: none !important;
+      background: none !important;
+    }
+
+    /* ---------------- Footer ---------------- */
+    footer {
+      background-color: #011436;
+      color: #fff;
+      text-align: center;
+      padding: 20px 0;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      z-index: 1000;
+    }
+
+    /* ---------------- Responsive ---------------- */
+    @media (max-width: 600px) {
+      .card {
+        width: 200px;
+      }
+
+      .main {
+        padding: 150px 10px;
+      }
+
+      .navbar {
+        flex-wrap: wrap;
+      }
+
+      .navbar a {
+        margin-bottom: 10px;
+      }
+    }
+
+
+
+    /* ---------------- Carousel styling inside main section ---------------- */
+    .carousel {
+      position: relative;
+      width: 90%;
+      max-width: 1500px;
+      margin: 100px auto;
+      overflow: hidden;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.05);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+      padding: 20px 0;
+      margin-top: 300px;
+    }
+
+    .carousel-track {
+      display: flex;
+      width: max-content;
+      gap: 30px;
+      animation: scroll 18s linear infinite;
+      will-change: transform;
+    }
+
+    .carousel:hover .carousel-track {
+      animation-play-state: paused;
+    }
+
+    .card {
+      flex: 0 0 auto;
+      width: 250px;
+      border-radius: 12px;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.7);
+      transition: transform 0.3s ease;
+      text-align: center;
+      will-change: transform;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+    }
+
+    .card button {
+      margin-top: 10px;
+      background: #3b82f6;
+      color: #fff;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.2s ease;
+    }
+
+    .card button:hover {
+      background: #2563eb;
+    }
+
+    @keyframes scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    @media (max-width: 600px) {
+      .card {
+        width: 180px;
+        height: 140px;
+        font-size: 14px;
+      }
+    }
+
+    /* Accessibility: Stop animation for users who prefer reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      .carousel-track {
+        animation: none;
+      }
+    }
+    /* ==========================
+       NOTIFICATION PANEL STYLES (appended - non-destructive)
+       ========================== */
+
+    /* backdrop covering page when panel open (click to close) */
+    .notif-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 1500;
+      display: none;
+      background: rgba(0,0,0,0.28);
+      opacity: 0;
+      transition: opacity .18s ease;
+    }
+
+    /* panel (slides in from right) */
+    .notif-panel {
+      position: fixed;
+      top: 100px; /* aligns under your nav/header */
+      right: -380px; /* hidden off-screen initially */
+      width: 360px;
+      height: calc(100vh - 140px);
+      z-index: 1600;
+      background: rgba(255,255,255,0.06);
+      backdrop-filter: blur(12px) saturate(120%);
+      border-left: 1px solid rgba(255,255,255,0.08);
+      box-shadow: -8px 12px 40px rgba(0,0,0,0.45);
+      border-radius: 12px 0 0 12px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: right .32s cubic-bezier(.2,.9,.2,1);
+      overflow: hidden;
+      color: #fff;
+    }
+
+    .notif-panel.open {
+      right: 12px;
+    }
+
+    .notif-panel .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .notif-panel h3 { font-size: 18px; margin: 0; }
+    .notif-panel .close-btn {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.06);
+      color: #fff;
+      padding: 6px 8px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .notif-list {
+      overflow-y: auto;
+      padding-right: 6px;
+      margin-top: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    /* compact rectangular notification (WhatsApp-like) */
+    .notif {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.12));
+      padding: 10px;
+      border-radius: 10px;
+      min-height: 64px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.25);
+      transform: translateX(20px);
+      opacity: 0;
+      transition: transform .32s ease, opacity .32s ease;
+    }
+
+    /* class toggled when panel opens to animate items in with stagger */
+    .notif.show {
+      transform: translateX(0);
+      opacity: 1;
+    }
+
+    .notif-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      width: 100%;
+    }
+
+    .notif-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 8px;
+      background: linear-gradient(120deg,#6ee7b7,#60a5fa);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: #04243b;
+      flex-shrink: 0;
+      overflow: hidden;
+      font-size: 14px;
+    }
+
+    .notif-info {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      font-size: 13px;
+      color: #f6f6f6;
+      text-align: left;
+      width: calc(100% - 68px);
+    }
+
+    .notif-info .name { font-weight: 700; color: #fff; font-size: 14px; }
+    .notif-info .meta { color: #dbeafe; font-size: 12px; }
+
+    .notif-actions {
+      display: flex;
+      gap: 6px;
+      width: 100%;
+      margin-top: 8px;
+      justify-content: space-between;
+    }
+
+    .notif-actions button {
+      flex: 1;
+      border: none;
+      padding: 6px 8px;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      color: #fff;
+    }
+    .btn-view { background: #2563eb; }
+    .btn-accept { background: #16a34a; }
+    .btn-deny { background: #ef4444; }
+
+    /* scrollbar styling (inside panel) */
+    .notif-list::-webkit-scrollbar { width: 9px; }
+    .notif-list::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 8px; }
+    .notif-list::-webkit-scrollbar-track { background: transparent; }
+
+    /* small screens: shrink panel width */
+    @media (max-width: 900px) {
+      .notif-panel { width: 320px; }
+      .notif-panel.open { right: 6px; }
+    }
+    @media (max-width: 640px) {
+      .notif-toggle { display: none; } /* you preferred toggle; hide on small screens if needed */
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ================= original header/nav (kept structurally the same) ================= -->
+  <header>
+    <div class="header-container">
+      <img src="logo.png" alt="Skill Swap Logo" class="logo">
+      <div class="header-text">
+        <h1>Skill Swap</h1>
+        <p>Share what you know, learn what you love. No money, just mutual growth.</p>
+      </div>
+    </div>
+  </header>
+
+  <nav>
+    <div class="nav-left">
+      <a href="skillswap.html">Log Out</a>
+      <a href="editpage.html">My Profile</a>
+    </div>
+
+    <!-- nav-right: bell toggle (non-intrusive) -->
+    <div class="nav-right" aria-hidden="false">
+      <div id="notifToggle" class="notif-toggle" title="Notifications" aria-label="Toggle notifications">
+        <!-- white SVG bell -->
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+          <path d="M15 17H9m6 0a2 2 0 0 1-2 2H11a2 2 0 0 1-2-2m7-3V10a5 5 0 10-10 0v4l-2 2v1h16v-1l-2-2z" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+
+        <!-- unread badge -->
+        <div id="notifBadge" class="notif-badge" style="display: inline-flex;">3</div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ================= main content (unchanged) ================= -->
+  <div class="blur-bg"></div>
+  <div class="main">
+    <h1>Find People to Swap Skills With</h1>
+    <p>Connect with others, learn new things, and share what you know!</p>
+
+    <!-- Carousel Section (kept exactly as before) -->
+    <div class="carousel">
+      <div class="carousel-track">
+         <div class="card">
+          <h3>Jethalal</h3>
+          <p><strong>Teaches:</strong> Graphic Design</p>
+          <p><strong>Wants to Learn:</strong> Web Development</p>
+          <button onclick="window.location.href='jethalal.html'">Request Swap</button>
+        </div>
+
+        <div class="card">
+          <h3>Babita</h3>
+          <p><strong>Teaches:</strong> Java Programming</p>
+          <p><strong>Wants to Learn:</strong> Video Editing</p>
+          <button onclick="window.location.href='babita.html'">Request Swap</button>
+        </div>
+
+        <div class="card">
+          <h3>Daya</h3> 
+          <p><strong>Teaches:</strong> UI/UX Design</p>
+          <p><strong>Wants to Learn:</strong> Data Analysis</p>
+          <button onclick="window.location.href='Daya.html'">Request Swap</button>
+        </div>
+
+        <div class="card">
+          <h3>Iyer</h3>
+          <p><strong>Teaches:</strong> Photography</p>
+          <p><strong>Wants to Learn:</strong> Digital Marketing</p>
+          <button onclick="window.location.href='iyer.html'">Request Swap</button>
+        </div>
+
+        <div class="card">
+          <h3>Bhide</h3>
+          <p><strong>Teaches:</strong> Public Speaking</p>
+          <p><strong>Wants to Learn:</strong> Python Programming</p>  
+          <button onclick="window.location.href='bhide.html'">Request Swap</button>
+        </div>
+
+        <div class="card">
+          <h3>Tarak Mehta</h3>
+          <p><strong>Teaches:</strong> Guitar</p>
+          <p><strong>Wants to Learn:</strong> Video Editing</p>
+          <button onclick="window.location.href='Tarak Mehta.html'">Request Swap</button>
+        </div>
+
+        <!-- Duplicates for infinite scroll -->
+        <div class="card">
+          <h3>Jethalal</h3>
+          <p><strong>Teaches:</strong> Graphic Design</p>
+          <p><strong>Wants to Learn:</strong> Web Development</p>
+          <button onclick="window.location.href='jethalal.html'">Request Swap</button>
+        </div>
+
+        <div class="card">
+          <h3>Babita</h3>
+          <p><strong>Teaches:</strong> Java Programming</p>
+          <p><strong>Wants to Learn:</strong> Video Editing</p>
+          <button onclick="window.location.href='babita.html'">Request Swap</button>
+        </div>
+
+        <div class="card">
+          <h3>Daya</h3>
+          <p><strong>Teaches:</strong> UI/UX Design</p>
+          <p><strong>Wants to Learn:</strong> Data Analysis</p>
+          <button onclick="window.location.href='Daya.html'">Request Swap</button>
+        </div>
+
+        <div class="card">
+          <h3>Iyer</h3>
+          <p><strong>Teaches:</strong> Photography</p>
+          <p><strong>Wants to Learn:</strong> Digital Marketing</p>
+          <button onclick="window.location.href='iyer.html'">Request Swap</button>
+        </div>
+
+        <div class="card">
+          <h3>Bhide</h3>
+          <p><strong>Teaches:</strong> Public Speaking</p>
+          <p><strong>Wants to Learn:</strong> Python Programming</p>  
+          <button onclick="window.location.href='bhide.html'">Request Swap</button>
+        </div>
+
+        <div class="card">
+          <h3>Tarak Mehta</h3>
+          <p><strong>Teaches:</strong> Guitar</p>
+          <p><strong>Wants to Learn:</strong> Video Editing</p>
+          <button onclick="window.location.href='Tarak Mehta.html'">Request Swap</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+      
+    
+  
+
+  <footer>
+    © 2025 Skill Swap. All rights reserved.
+  </footer>
+
+  <!-- ================= notification overlay & panel (appended) ================= -->
+  <div id="notifBackdrop" class="notif-backdrop" aria-hidden="false" style="display: block; opacity: 1;"></div>
+
+  <aside id="notifPanel" class="notif-panel open" aria-hidden="false" role="dialog" aria-label="Notifications panel">
+    <div class="panel-header">
+      <h3>Notifications</h3>  
+      <button id="notifClose" class="close-btn" aria-label="Close notifications">Close</button>
+    </div>
+
+    <div class="notif-list" id="notifList" aria-live="polite"><div class="notif show" data-id="n3"><div class="notif-row"><div class="notif-avatar">VR</div><div class="notif-info"><div class="name">Vikas Rao</div>
+                          <div class="meta"></div></div></div><div class="notif-actions">
+          <button class="btn-view" data-action="view">Profile</button>
+          <button class="btn-accept" data-action="accept">Accept</button>
+          <button class="btn-deny" data-action="deny">Deny</button>
+        </div></div><div class="notif show" data-id="n2"><div class="notif-row"><div class="notif-avatar">AG</div><div class="notif-info"><div class="name">Ananya Gupta</div>
+                          <div class="meta"></div></div></div><div class="notif-actions">
+          <button class="btn-view" data-action="view">Profile</button>
+          <button class="btn-accept" data-action="accept">Accept</button>
+          <button class="btn-deny" data-action="deny">Deny</button>
+        </div></div><div class="notif show" data-id="n1"><div class="notif-row"><div class="notif-avatar">RP</div><div class="notif-info"><div class="name">Rohan Patel</div>
+                          <div class="meta"></div></div></div><div class="notif-actions">
+          <button class="btn-view" data-action="view">Profile</button>
+          <button class="btn-accept" data-action="accept">Accept</button>
+          <button class="btn-deny" data-action="deny">Deny</button>
+        </div></div></div>
+  </aside>
+
+  <!-- ================= JS: toggle, persistence, animations ================= -->
+  <script>
+    (function(){
+      const STORAGE_KEY = 'skillswap_notifications_v1';
+
+      // default dummy notifications (used only if no saved data)
+      const defaultNotifs = [
+        { id: 'n1', name: 'Rohan Patel', teaches: 'Video Editing', wants: 'UI Design', initials: 'RP', status: 'pending', createdAt: Date.now()-1000*60*60 },
+        { id: 'n2', name: 'Ananya Gupta', teaches: 'Data Science', wants: 'Public Speaking', initials: 'AG', status: 'pending', createdAt: Date.now()-1000*60*30 },
+        { id: 'n3', name: 'Vikas Rao', teaches: 'Guitar', wants: 'Python', initials: 'VR', status: 'pending', createdAt: Date.now()-1000*60*10 }
+      ];
+
+      // helpers
+      const $ = sel => document.querySelector(sel);
+      const $$ = sel => Array.from(document.querySelectorAll(sel));
+
+      const panel = $('#notifPanel');
+      const backdrop = $('#notifBackdrop');
+      const toggle = $('#notifToggle');
+      const closeBtn = $('#notifClose');
+      const listEl = $('#notifList');
+      const badge = $('#notifBadge');
+
+      // load notifications from localStorage or use defaults
+      function loadNotifs() {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          if (!raw) return defaultNotifs.slice(); // clone
+          const parsed = JSON.parse(raw);
+          // keep only pending/accepted/denied entries (backwards safe)
+          if (!Array.isArray(parsed)) return defaultNotifs.slice();
+          return parsed;
+        } catch (e) {
+          console.error('Failed to load notifs', e);
+          return defaultNotifs.slice();
+        }
+      }
+
+      function saveNotifs(arr) {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(arr));
+        } catch (e) {
+          console.error('Failed to save notifs', e);
+        }
+      }
+
+      // compute unread (pending) count
+      function unreadCount(arr) {
+        return arr.filter(n => n.status === 'pending').length;
+      }
+
+      // render badge
+      function renderBadge(arr) {
+        const count = unreadCount(arr);
+        if (count > 0) {
+          badge.style.display = 'inline-flex';
+          badge.textContent = count > 99 ? '99+' : count;
+        } else {
+          badge.style.display = 'none';
+        }
+      }
+
+      // create DOM notif element
+      function createNotifEl(n) {
+        const wrap = document.createElement('div');
+        wrap.className = 'notif';
+        wrap.dataset.id = n.id;
+
+        const row = document.createElement('div');
+        row.className = 'notif-row';
+
+        const avatar = document.createElement('div');
+        avatar.className = 'notif-avatar';
+        avatar.textContent = n.initials || n.name.split(' ').map(i=>i[0]).slice(0,2).join('').toUpperCase();
+
+        const info = document.createElement('div');
+        info.className = 'notif-info';
+        info.innerHTML = `<div class="name">${escapeHtml(n.name)}</div>
+                          <div class="meta">Teaches: ${escapeHtml(n.teaches)} — Wants: ${escapeHtml(n.wants)}</div>`;
+
+        row.appendChild(avatar);
+        row.appendChild(info);
+        wrap.appendChild(row);
+
+        const actions = document.createElement('div');
+        actions.className = 'notif-actions';
+        actions.innerHTML = `
+          <button class="btn-view" data-action="view">Profile</button>
+          <button class="btn-accept" data-action="accept">Accept</button>
+          <button class="btn-deny" data-action="deny">Deny</button>
+        `;
+        wrap.appendChild(actions);
+
+        // attach a small attribute for status
+        if (n.status && n.status !== 'pending') {
+          wrap.dataset.status = n.status;
+        }
+
+        return wrap;
+      }
+
+      // escape helper
+      function escapeHtml(s) {
+        if (!s) return '';
+        return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+      }
+
+      // render list (clears then append)
+      function renderList(arr) {
+        listEl.innerHTML = '';
+        // show newest first
+        const ordered = arr.slice().sort((a,b)=>b.createdAt - a.createdAt);
+        if (ordered.length === 0) {
+          const hint = document.createElement('div');
+          hint.style.color = 'rgba(255,255,255,0.7)';
+          hint.style.padding = '12px';
+          hint.textContent = 'No notifications';
+          listEl.appendChild(hint);
+          return;
+        }
+
+        ordered.forEach((n, idx) => {
+          if (n.status === 'removed') return; // hidden permanently if flagged removed
+          const el = createNotifEl(n);
+          listEl.appendChild(el);
+        });
+      }
+
+      // animate items with stagger when opening
+      function animateItemsIn() {
+        const items = Array.from(listEl.children);
+        items.forEach((it, i) => {
+          // remove any previous show class
+          it.classList.remove('show');
+          // staggered timeout
+          setTimeout(()=> { it.classList.add('show'); }, 80 * i);
+        });
+      }
+
+      // open / close panel
+      function openPanel() {
+        panel.classList.add('open');
+        backdrop.style.display = 'block';
+        // small delay to let opacity transition
+        requestAnimationFrame(()=> {
+          backdrop.style.opacity = '1';
+        });
+        panel.setAttribute('aria-hidden', 'false');
+        backdrop.setAttribute('aria-hidden', 'false');
+        // animate items in
+        animateItemsIn();
+      }
+      function closePanel() {
+        panel.classList.remove('open');
+        backdrop.style.opacity = '0';
+        setTimeout(()=> { backdrop.style.display = 'none'; }, 240);
+        panel.setAttribute('aria-hidden', 'true');
+        backdrop.setAttribute('aria-hidden', 'true');
+      }
+
+      // update state helpers
+      let notifications = loadNotifs();
+      renderList(notifications);
+      renderBadge(notifications);
+
+      // events: open/close
+      toggle.addEventListener('click', (e) => {
+        if (panel.classList.contains('open')) closePanel();
+        else {
+          openPanel();
+          // mark visible items as "seen" (but still pending) if you want; for now badge counts pending only
+        }
+      });
+      closeBtn.addEventListener('click', closePanel);
+      backdrop.addEventListener('click', closePanel);
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closePanel(); });
+
+      // delegate click on notif actions
+      listEl.addEventListener('click', function(e) {
+        const btn = e.target.closest('button');
+        if (!btn) return;
+        const action = btn.dataset.action;
+        const card = btn.closest('.notif');
+        if (!card) return;
+        const id = card.dataset.id;
+        const notifIndex = notifications.findIndex(x => x.id === id);
+        const notif = notifications[notifIndex];
+
+        if (action === 'view') {
+          // example: open profile (local demo)
+          alert('Open profile for ' + (notif ? notif.name : 'user') + ' (demo)');
+          // you can later replace this with actual navigation:
+          // window.location.href = `/profile.html?user=${encodeURIComponent(id)}`;
+          return;
+        }
+
+        if (action === 'accept' || action === 'deny') {
+          const confirmText = action === 'accept'
+            ? `Accept swap with ${notif.name}?`
+            : `Deny swap request from ${notif.name}?`;
+          if (!confirm(confirmText)) return;
+
+          // mark removed so it's not shown again (you can change to status 'accepted'/'denied' if you prefer)
+          notifications.splice(notifIndex, 1);
+          saveNotifs(notifications);
+          // animate removal
+          card.style.transition = 'opacity .22s ease, transform .22s ease, height .22s ease';
+          card.style.opacity = '0';
+          card.style.transform = 'translateX(12px) scale(.98)';
+          setTimeout(()=> {
+            card.remove();
+            renderBadge(notifications);
+            // if list became empty, re-render hint
+            if (notifications.length === 0) renderList(notifications);
+          }, 240);
+        }
+      });
+
+      // Save changes when panel closed or when page unloads
+      // (we already save on Accept/Deny)
+      window.addEventListener('beforeunload', () => {
+        saveNotifs(notifications);  
+      });
+
+      // initial persistence: if no saved data, write defaults into storage so further changes persist
+      (function initPersistence(){
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          if (!raw) {
+            // save defaults
+            saveNotifs(defaultNotifs);
+            notifications = loadNotifs();
+            renderList(notifications);
+            renderBadge(notifications);
+          } else {
+            notifications = loadNotifs();
+            renderList(notifications);
+            renderBadge(notifications);
+          }
+        } catch (e) {
+          console.error(e);
+        }
+      })();
+
+    })();
+  </script>
+<!-- Code injected by live-server -->
+<script>
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+</script>
+
+
+</body></html>
