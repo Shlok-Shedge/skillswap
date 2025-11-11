@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SkillSwap Chat</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet" />
+  <style>
+    /* ===== RESET ===== */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f1f3f6;
+      color: #011436;
+    }
+
+    /* ===== HEADER ===== */
+    header {
+      background-color: #011436;
+      color: white;
+      text-align: center;
+      padding: 12px 0;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+    .logo {
+      width: 60px;
+      height: 60px;
+      position: absolute;
+      left: 18px;
+      top: 13px;
+    }
+
+    header h1 { font-family: "Lobster", cursive; font-size: 2rem; }
+    header p { font-size: 0.9rem; color: #ccc; }
+
+    /* ===== CHAT LAYOUT ===== */
+    .chat-container {
+      display: flex;
+      height: calc(100vh - 100px);
+      margin-top: 80px;
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+      width: 260px;
+      background-color: #1e1e1e;
+      color: white;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sidebar h3 { text-align: center; padding: 15px; border-bottom: 1px solid #444; }
+
+    .search-bar { padding: 10px; }
+    .search-bar input {
+      width: 100%;
+      padding: 8px;
+      border-radius: 6px;
+      border: none;
+      outline: none;
+    }
+
+    .user-list { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+    .user-list::-webkit-scrollbar { width: 0; background: transparent; }
+
+    .user {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px;
+      border-bottom: 1px solid #333;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .user:hover, .user.active { background-color: #2b6ed4; }
+
+    .user img {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    /* CHAT AREA */
+    .chat-area {
+      flex: 1;
+      background-color: #f5f6fa;
+      display: flex;
+      flex-direction: column;
+      border-left: 1px solid #ccc;
+    }
+
+    .chat-header {
+      background-color: #2a2a2a;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 20px;
+    }
+
+    .chat-user { display: flex; align-items: center; gap: 10px; }
+    .chat-user-img {
+      width: 32px; height: 32px;
+      border-radius: 50%; object-fit: cover;
+    }
+
+    /* CHAT BODY */
+    .chat-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      background: #e5ddd5;
+    }
+
+    .message {
+      max-width: 70%;
+      padding: 10px 15px;
+      border-radius: 15px;
+      word-wrap: break-word;
+      font-size: 0.95rem;
+      position: relative;
+      line-height: 1.4;
+    }
+
+    .message.user {
+      background-color: #dcf8c6;
+      align-self: flex-end;
+      border-bottom-right-radius: 0;
+    }
+
+    .message.bot {
+      background-color: #fff;
+      align-self: flex-start;
+      border-bottom-left-radius: 0;
+    }
+
+    /* CHAT FOOTER */
+    .chat-footer {
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      background-color: #f9f9f9;
+      border-top: 1px solid #ddd;
+      position: relative;
+      z-index: 5;
+      margin-bottom: 30px;
+    }
+
+    .chat-footer input {
+      flex: 1;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      outline: none;
+    }
+
+    .chat-footer button {
+      margin-left: 10px;
+      background-color: #2b6ed4;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 8px 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .chat-footer button:hover { background-color: #1d4f9f; }
+
+    .view-profile-btn {
+      background-color: #2b6ed4;
+      color: white;
+      border: none;
+      padding: 6px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: 0.3s;
+    }
+    .view-profile-btn:hover { background-color: #1d4f9f; }
+
+    /* ===== PROFILE POPUP ===== */
+    .profile-popup {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(6px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      visibility: hidden;
+      opacity: 0;
+      transition: all 0.4s ease-in-out;
+      z-index: 2000;
+    }
+
+    .profile-popup.active { visibility: visible; opacity: 1; }
+
+    .popup-content {
+      background: #fff;
+      width: 420px;
+      max-height: 85%;
+      overflow-y: auto;
+      border-radius: 20px;
+      padding: 25px 30px;
+      text-align: center;
+      transform: translateY(50px);
+      transition: all 0.4s ease-in-out;
+    }
+
+    .profile-popup.active .popup-content { transform: translateY(0); }
+    .popup-content::-webkit-scrollbar { display: none; }
+
+    .close-btn {
+      position: absolute;
+      top: 25px; right: 35px;
+      font-size: 28px;
+      color: #011436;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.2s;
+    }
+    .close-btn:hover { color: #c00; }
+
+    .popup-profile-img {
+      width: 110px; height: 110px;
+      border-radius: 50%;
+      border: 4px solid #011436;
+      object-fit: cover;
+      margin-bottom: 10px;
+    }
+
+    .popup-header h2 { margin-top: 10px; color: #011436; }
+    .popup-header p { color: #666; margin: 3px 0; }
+    .popup-tagline { font-style: italic; color: #333; }
+
+    .popup-about, .popup-skills { text-align: left; margin-top: 20px; }
+    .popup-about h3, .popup-skills h3 {
+      color: #011436;
+      margin-bottom: 8px;
+      font-family: "Lobster", cursive;
+    }
+    .popup-about p { color: #333; line-height: 1.5; }
+
+    .popup-skills ul {
+      list-style: none; padding: 0;
+      display: flex; flex-wrap: wrap;
+      gap: 10px; margin-bottom: 15px;
+    }
+    .popup-skills li {
+      background-color: #011436;
+      color: white;
+      padding: 8px 14px;
+      border-radius: 10px;
+      font-size: 0.9rem;
+    }
+
+    /* MAIN FOOTER */
+    footer {
+      background: linear-gradient(90deg, #011436, #002b6e);
+      color: #f5f5f5;
+      text-align: center;
+      padding: 14px 0;
+      font-size: 15px;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      letter-spacing: 0.5px;
+      box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.4);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(4px);
+      z-index: 1500;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="logo.png" alt="Skill Swap Logo" class="logo">
+    <h1>SkillSwap</h1>
+    <p>Share what you know, learn what you love. No money, just mutual growth.</p>
+  </header>
+
+  <div class="chat-container">
+    <div class="sidebar">
+      <h3>Chat Room</h3>
+      <div class="search-bar"><input type="text" placeholder="Search..." /></div>
+      <div class="user-list" id="userList"></div>
+    </div>
+
+    <div class="chat-area">
+      <div class="chat-header">
+        <div class="chat-user">
+          <img src="user1.jpg" alt="User" class="chat-user-img" id="chatUserImg" />
+          <span class="chat-username" id="chatUserName"></span>
+        </div>
+        <button class="view-profile-btn" onclick="openProfilePopup()">View Profile</button>
+      </div>
+
+      <div class="chat-body" id="chatBody"></div>
+
+      <div class="chat-footer">
+        <input id="chatInput" type="text" placeholder="Type a message..." />
+        <button id="sendBtn">Send</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROFILE POPUP -->
+  <div id="profilePopup" class="profile-popup">
+    <div class="popup-content" id="profileContent">
+      <span class="close-btn" onclick="closeProfilePopup()">×</span>
+    </div>
+  </div>
+
+  <footer><p>© 2025 SkillSwap | All Rights Reserved</p></footer>
+
+  <script>
+    const users = [
+      {
+        name: "Jethalal",
+        username: "@jethalal",
+        img: "user1.jpg",
+        tagline: "Web Developer | Lifelong Learner",
+        about: "Passionate about creating interactive web applications and helping others learn programming.",
+        offer: ["HTML", "CSS", "JavaScript"],
+        learn: ["ReactJS", "UI/UX Design"]
+      },
+      {
+        name: "Iyer",
+        username: "@Iyer",
+        img: "user2.jpg",
+        tagline: "Backend Dev | Python Enthusiast",
+        about: "Building efficient backend systems with Flask and Django.",
+        offer: ["Python", "Flask", "Django"],
+        learn: ["Machine Learning", "Docker"]
+      },
+      {
+        name: "Babita",
+        username: "@Babita",
+        img: "user3.jpg",
+        tagline: "UI Designer | Artist",
+        about: "Designing elegant and intuitive user experiences for web and mobile apps.",
+        offer: ["Figma", "UI Design", "Photoshop"],
+        learn: ["HTML", "CSS", "ReactJS"]
+      },
+      {
+        name: "Bhide",
+        username: "@Bhide",
+        img: "user4.jpg",
+        tagline: "AI Explorer | Data Science Student",
+        about: "Loves solving problems using AI and deep learning models.",
+        offer: ["Python", "Pandas", "TensorFlow"],
+        learn: ["Web Development", "APIs"]
+      },
+      {
+        name: "Tarak Metha",
+        username: "@Tarak",
+        img: "user5.jpg",
+        tagline: "Cybersecurity Enthusiast | Ethical Hacker",
+        about: "Dedicated to building secure systems and spreading awareness about online safety and network protection.",
+        offer: ["Networking", "Linux", "Ethical Hacking"],
+        learn: ["Cloud Security", "Penetration Testing"]
+      },
+      {
+        name: "Daya",
+        username: "@Daya",
+        img: "user6.jpg",
+        tagline: "Full Stack Developer | Tech Mentor",
+        about: "Loves creating seamless full-stack apps and mentoring budding developers to grow in tech.",
+        offer: ["ReactJS", "NodeJS", "MongoDB"],
+        learn: ["DevOps", "AWS"]
+      }
+    ];
+
+    const userList = document.getElementById("userList");
+    const chatUserName = document.getElementById("chatUserName");
+    const chatUserImg = document.getElementById("chatUserImg");
+    const chatBody = document.getElementById("chatBody");
+    const input = document.getElementById("chatInput");
+    const sendBtn = document.getElementById("sendBtn");
+    let currentUser = null;
+
+    const botReplies = {
+      "Jethlal": "Hey, Jethalal here 👋 What’s up?",
+      "Iyer": "Hey, this is Iyer ! How can I assist?",
+      "Babita": "Hi, Babita here 😊 Let’s talk!",
+      "Bhide": "Yo, Bhide here 💬 ready to chat!",
+      "Tarak Mehta": "Hey ! Tarak Metha here — got any security puzzles? 🔒",
+      "Daya": "Hi, Daya here 👩‍💻 Let’s code and collaborate!"
+    };
+
+    // Load sidebar users
+    users.forEach((u, i) => {
+      const div = document.createElement("div");
+      div.className = "user";
+      div.innerHTML = `<img src="${u.img}" alt=""> ${u.name}`;
+      div.addEventListener("click", () => selectUser(i));
+      userList.appendChild(div);
+    });
+
+    // Auto-select first user (Mani)
+    window.addEventListener("DOMContentLoaded", () => selectUser(0));
+
+    function selectUser(index) {
+      currentUser = users[index];
+      chatUserName.textContent = currentUser.name;
+      chatUserImg.src = currentUser.img;
+      document.querySelectorAll(".user").forEach(u => u.classList.remove("active"));
+      document.querySelectorAll(".user")[index].classList.add("active");
+      chatBody.innerHTML = "";
+    }
+
+    function appendMessage(text, sender) {
+      const msg = document.createElement("div");
+      msg.classList.add("message", sender);
+      msg.textContent = text;
+      chatBody.appendChild(msg);
+      chatBody.scrollTop = chatBody.scrollHeight;
+    }
+
+    function sendMessage() {
+      const text = input.value.trim();
+      if (!text || !currentUser) return;
+      appendMessage(text, "user");
+      input.value = "";
+      setTimeout(() => {
+        appendMessage(botReplies[currentUser.name] || "I'll reply soon!", "bot");
+      }, 700);
+    }
+
+    sendBtn.addEventListener("click", sendMessage);
+    input.addEventListener("keydown", e => { if (e.key === "Enter") sendMessage(); });
+
+    function openProfilePopup() {
+      const popup = document.getElementById("profilePopup");
+      const content = document.getElementById("profileContent");
+      content.innerHTML = `
+        <span class="close-btn" onclick="closeProfilePopup()">×</span>
+        <div class="popup-header">
+          <img src="${currentUser.img}" class="popup-profile-img" />
+          <h2>${currentUser.name}</h2>
+          <p>${currentUser.username}</p>
+          <p class="popup-tagline">${currentUser.tagline}</p>
+        </div>
+        <div class="popup-about">
+          <h3>About</h3>
+          <p>${currentUser.about}</p>
+        </div>
+        <div class="popup-skills">
+          <h3>Skills I Offer</h3>
+          <ul>${currentUser.offer.map(s => `<li>${s}</li>`).join("")}</ul>
+          <h3>Skills I Want to Learn</h3>
+          <ul>${currentUser.learn.map(s => `<li>${s}</li>`).join("")}</ul>  
+        </div>
+      `;
+      popup.classList.add("active");
+    }
+
+    function closeProfilePopup() {
+      document.getElementById("profilePopup").classList.remove("active");
+    }
+
+    document.getElementById("profilePopup").addEventListener("click", e => {
+      if (e.target.id === "profilePopup") closeProfilePopup();
+    });
+  </script>
+</body>
+</html>

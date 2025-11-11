@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up</title>
+  <link rel="stylesheet" href="sign_up_page.css">
+  <script>
+    function validateForm(event) {
+      event.preventDefault();
+
+      const firstName = document.getElementById("firstName").value.trim();
+      const lastName = document.getElementById("lastName").value.trim();
+      const mobile = document.getElementById("mobile").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+      const confirmPassword = document.getElementById("confirmPassword").value;
+
+      // ✅ Name validation
+      const nameRegex = /^[A-Za-z]+$/;
+      if (!nameRegex.test(firstName) || !nameRegex.test(lastName)) {
+        alert("First and Last names should contain letters only.");
+        return false;
+      }
+
+      // ✅ Mobile validation
+      const mobileRegex = /^[0-9]{10}$/;
+      if (!mobileRegex.test(mobile)) {
+        alert("Please enter a valid 10-digit mobile number.");
+        return false;
+      }
+
+      // ✅ Email validation
+      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-z]{2,}$/;
+      if (!emailRegex.test(email)) {
+        alert("Please enter a valid email address.");
+        return false;
+      }
+
+      // ✅ Password validation
+      const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_\-+=<>?{}[\]~]).{8,}$/;
+      if (!passwordRegex.test(password)) {
+        alert("Password must be at least 8 characters long and include:\n• One uppercase letter\n• One digit\n• One special character");
+        return false;
+      }
+
+      // ✅ Confirm password
+      if (password !== confirmPassword) {
+        alert("Passwords do not match.");
+        return false;
+      }
+
+      // ✅ Save user data to localStorage
+      const userData = { firstName, lastName, mobile, email, password };
+      localStorage.setItem("user", JSON.stringify(userData));
+
+      alert("Sign-up successful! Redirecting to login page...");
+
+      // Redirect after delay
+      setTimeout(() => {
+        window.location.replace("login_page.html");
+      }, 800);
+
+      return true;
+    }
+  </script>
+</head>
+
+<body>
+  <div class="container">
+    <form class="signup-form" onsubmit="return validateForm(event)">
+      <div class="form-header">
+        <h2>Sign Up</h2>
+        <img src="logo.png" alt="Logo" class="logo">
+      </div>
+      <p>Please fill in this form to create an account!</p>
+      <hr>
+
+      <div class="name-fields">
+        <input type="text" id="firstName" placeholder="First Name" required>
+        <input type="text" id="lastName" placeholder="Last Name" required>
+      </div>
+
+      <input type="text" id="mobile" placeholder="Mobile Number" required>
+      <input type="email" id="email" placeholder="Email" required>
+      <input type="password" id="password" placeholder="Password" required>
+      <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+
+      <label class="checkbox-container">
+        <input type="checkbox" required>
+        I accept the <a href="#">Terms of Use</a> & <a href="#">Privacy Policy</a>.
+      </label>
+
+      <button type="submit" class="signup-btn">Sign Up</button>
+
+      <p class="login-text">Already have an account? <a href="login_page.html">Login here.</a></p>
+    </form>
+  </div>
+</body>
+</html>

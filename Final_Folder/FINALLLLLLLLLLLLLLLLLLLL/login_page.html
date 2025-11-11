@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="login_page.css">
+    <script>
+        function validateLogin(event) {
+            event.preventDefault();
+
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value.trim();
+
+            // ✅ Get stored user data from localStorage (saved during signup)
+            const storedUser = JSON.parse(localStorage.getItem("userData"));
+
+            // ✅ If no user found, redirect to signup
+            if (!storedUser) {
+                alert("No user found! Please sign up first.");
+                window.location.href = "sign_up_page.html";
+                return;
+            }
+
+            // ✅ Match credentials
+            if (email === storedUser.email && password === storedUser.password) {
+                alert("Login successful! Redirecting...");
+
+                // Store session info
+                localStorage.setItem("isLoggedIn", "true");
+
+                // Redirect after a short delay
+                setTimeout(() => {
+                    window.location.href = "infinite.html"; // redirect here
+                }, 800);
+            } else {
+                alert("Invalid email or password!");
+            }
+        }
+
+        // ✅ Optional: if already logged in, skip login page
+        window.onload = function () {
+            if (localStorage.getItem("isLoggedIn") === "true") {
+                window.location.href = "infinite.html";
+            }
+        };
+    </script>
+</head>
+<body>
+    <div class="container">
+        <form class="signup-form" onsubmit="validateLogin(event)">
+            <div class="form-header">   
+                <h2>Login</h2>
+                <img src="logo.png" alt="Logo" class="logo">
+            </div>
+            <p>Please fill in your credentials!</p>
+            <hr>
+
+            <input type="email" id="email" placeholder="Email" required>
+            <input type="password" id="password" placeholder="Password" required>
+
+            <!-- ✅ Forgot Password link -->
+            <div style="text-align: right; margin: 8px 0 15px;">
+                <a href="forgotpassword.html" style="color: #007bff; text-decoration: none; font-size: 14px;">
+                    Forgot Password?
+                </a>
+            </div>
+
+            <button type="submit" class="signup-btn">Login</button>
+
+            <p class="login-text">Don't have an account? 
+                <a href="sign_up_page.html">Sign up here.</a>
+            </p>
+        </form>
+    </div>
+</body>
+</html>

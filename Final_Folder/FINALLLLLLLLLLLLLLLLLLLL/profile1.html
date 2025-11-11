@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Profile | SkillSwap</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="editprofile.css"> <!-- same CSS as edit page -->
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="main-header">
+    <div class="header-content">
+      <img src="logo.png" alt="SkillSwap Logo" class="logo">
+      <div class="header-text">
+        <h1>Skill Swap</h1>
+        <p>Share what you know, learn what you love. No money, just mutual growth.</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- Profile Card -->
+  <main>
+    <div class="profile-card">
+      <div class="profile-header">
+        <div class="profile-pic">
+          <img id="displayImage" src="default-avatar.png" alt="">
+        </div>
+
+        <input type="text" id="displayUsername" readonly>
+        <input type="number" id="displayAge" readonly>
+        <input type="text" id="displayTagline" readonly>
+      </div>
+
+      <!-- About Me -->
+      <div class="about-section">
+        <h3>About Me</h3>
+        <textarea id="displayAbout" readonly></textarea>
+      </div>
+
+      <!-- Skills I Offer -->
+      <div class="skills-section">
+        <h3>Skills I Offer</h3>
+        <div class="skills-list" id="displayShareSkills"></div>
+      </div>
+
+      <!-- Skills I Want to Learn -->
+      <div class="skills-section">
+        <h3>Skills I Want to Learn</h3>
+        <div class="skills-list" id="displayLearnSkills"></div>
+      </div>
+
+      <div class="save-buttons">
+        <button class="cancel-btn" onclick="window.location.href='editpage.html'">Edit Profile</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 Skill Swap. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Load stored data from localStorage
+    window.addEventListener("DOMContentLoaded", () => {
+      const profileData = JSON.parse(localStorage.getItem("profileData"));
+      if (profileData) {
+        document.getElementById("displayUsername").value = profileData.username || "@username";
+        document.getElementById("displayAge").value = profileData.age || "";
+        document.getElementById("displayTagline").value = profileData.tagline || "";
+        document.getElementById("displayAbout").value = profileData.about || "";
+
+        if (profileData.image) {
+          document.getElementById("displayImage").src = profileData.image;
+        }
+
+        const shareList = document.getElementById("displayShareSkills");
+        const learnList = document.getElementById("displayLearnSkills");
+        shareList.innerHTML = "";
+        learnList.innerHTML = "";
+
+        profileData.shareSkills?.forEach(skill => {
+          const div = document.createElement("div");
+          div.className = "skill-tag";
+          div.textContent = skill;
+          shareList.appendChild(div);
+        });
+
+        profileData.learnSkills?.forEach(skill => {
+          const div = document.createElement("div");
+          div.className = "skill-tag";
+          div.textContent = skill;
+          learnList.appendChild(div);
+        });
+      }
+    });
+  </script>
+</body>
+</html>

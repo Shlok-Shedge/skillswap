@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Logout</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background-color: #f7f9fc;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .logout-box {
+      background: white;
+      padding: 30px 40px;
+      border-radius: 15px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      color: #333;
+      margin-bottom: 15px;
+    }
+
+    p {
+      color: #555;
+      margin-bottom: 25px;
+    }
+
+    button {
+      padding: 10px 25px;
+      background-color: #ff4b5c;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background-color: #e04352;
+    }
+  </style>
+
+  <script>
+    // When page loads, check if user is logged in
+    window.onload = function() {
+      const isLoggedIn = localStorage.getItem("isLoggedIn");
+
+      if (isLoggedIn !== "true") {
+        alert("You are not logged in!");
+        window.location.href = "login_page.html";
+      }
+    };
+
+    function logoutUser() {
+      // Clear login flag (and optionally user data)
+      localStorage.removeItem("isLoggedIn");
+      // Optionally: localStorage.removeItem("userData");
+
+      alert("You have been logged out successfully!");
+      window.location.href = "login_page.html";
+    }
+  </script>
+</head>
+
+<body>
+  <div class="logout-box">
+    <h2>Are you sure you want to logout?</h2>
+    <p>You can log back in anytime with your account credentials.</p>
+    <button onclick="logoutUser()">Logout</button>
+  </div>
+</body>
+</html>

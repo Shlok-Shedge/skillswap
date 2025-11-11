@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Skill Swap</title>
+  <link rel="stylesheet" href="skillswap.css" />
+</head>
+<body>
+
+  <header>
+    <div class="header-container">
+      <img src="logo.png" alt="Skill Swap Logo" class="logo">
+      <div class="header-text">
+        <h1>Skill Swap</h1>
+        <p>Share what you know, learn what you love. No money, just mutual growth.</p>
+      </div>
+    </div>
+  </header>
+
+  <nav>
+    <div class="nav-left">
+      <a href="#">Home</a>
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="nav-right">
+      <a href="sign_up_page.html"><button class="signup-btn">Sign Up</button></a>
+      <a href="login_page.html"><button class="login-btn">Login</button></a>
+    </div>
+  </nav>
+
+  <!-- Blurred background container -->
+  <div class="blur-bg"></div>
+
+  <main>
+    <section id="about">
+      <h2>About Skill Swap:-</h2>
+      <p>
+        <b>SkillSwap</b> is a peer-to-peer skill exchange platform built for learners, dreamers, and creators. 
+        It connects people who want to share their talents with those eager to learn something new. 
+        Instead of spending money on classes, users exchange their skills directly teaching one another 
+        in a fun, supportive, and collaborative environment.
+      </p>
+      <p>
+        The goal is to create a <b>community-driven learning space</b> where everyone has something to teach and something to learn.
+        Whether it’s coding, music, art, languages, or fitness. SkillSwap makes it easy to connect and grow together.
+      </p>
+    </section>
+
+    <section id="more">
+      <h2><br>More about Us:-</h2>
+      <p>
+        At SkillSwap, we believe that knowledge should never be limited by cost or access.
+        Every user brings their own unique skill set, and by trading skills instead of money, 
+        you become both a teacher and a student at the same time.
+      </p>
+      <p>
+        Our platform also encourages collaboration, networking, and mentorship — helping you make 
+        real connections with people who share your interests and goals.
+      </p>
+      <p><b>Developed by:- Shlok Shedge, Mani Reddy, Dhrumil Rughani.<br></b></p>
+    </section>
+
+    <section id="services">
+      <h2><br>Our Services:-</h2>
+      <ul>
+        <li><b>Skill Exchange:</b> Swap your talents with others and learn something new in return.</li>
+        <li><b>Community Learning:</b> Join groups, attend workshops, and grow with like-minded peers.</li>
+        <li><b>Profile Matching:</b> Get paired with users whose skills complement yours.</li>
+        <li><b>Secure Communication:</b> Chat safely with others and schedule sessions easily.</li>
+        <li><b>Progress Tracking:</b> Keep track of your growth and display your achievements.</li>
+      </ul>
+    </section>
+
+    <section id="contact">
+      <h2><br>Contact Us:-</h2>
+      <p>We’d love to hear from you! Whether it’s feedback, collaboration ideas, or questions, feel free to reach out.</p>
+      <ul>
+        <li><b>Email:</b> support@skillswap.com</li>
+        <li><b>Instagram:</b> @SkillSwap_Community</li>
+        <li><b>LinkedIn:</b> SkillSwap Network</li>
+      </ul>
+      <p>Let’s make learning better — together.</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Skill Swap. All rights reserved.</p>
+  </footer>
+
+  <!-- JavaScript for bounce effect -->
+<!-- Smooth scrolling + improved elastic bounce effect -->
+<script>
+const main = document.querySelector('main');
+
+let isScrolling;
+main.addEventListener('scroll', () => {
+  // Clear our timeout every time user scrolls
+  window.clearTimeout(isScrolling);
+
+  // Set a timeout to run after scrolling stops
+  isScrolling = setTimeout(() => {
+    const maxScroll = main.scrollHeight - main.clientHeight;
+
+    if (main.scrollTop < 0) {
+      main.scrollTo({ top: 0, behavior: 'smooth' });
+    } else if (main.scrollTop > maxScroll) {
+      main.scrollTo({ top: maxScroll, behavior: 'smooth' });
+    }
+  }, 150); // 150ms after user stops scrolling
+});
+</script>
+
+</body>
+</html>
