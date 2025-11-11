@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Profile | SkillSwap</title>
+  <link rel="stylesheet" href="editprofile.css">
+  <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="main-header">
+    <div class="header-content">
+      <img src="logo.png" alt="SkillSwap Logo" class="logo">
+      <div class="header-text">
+        <h1>Skill Swap</h1>
+        <p>Share what you know, learn what you love. No money, just mutual growth.</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- Profile Card -->
+  <main>
+    <div class="profile-card">
+      <!-- Profile Header -->
+      <div class="profile-header">
+        <div class="profile-pic">
+          <input type="file" id="upload" accept="image/*">
+          <label for="upload" id="upload-label">+</label>
+          <img id="profileImage" src="default-avatar.png" alt="">
+        </div>
+        
+        <input type="text" id="username" placeholder="@username">
+        <input type="number" id="age" placeholder="Your Age" min="10" max="100" step="1">
+        <input type="text" id="tagline" placeholder="Short tagline">
+      </div>
+
+      <!-- About Me -->
+      <div class="about-section">
+        <h3>About Me</h3>
+        <textarea id="about" maxlength="250" placeholder="Write something about yourself... (Max 250 characters)"></textarea>
+      </div>
+
+      <!-- Skills I Offer -->
+      <div class="skills-section">
+        <h3>Skills I Offer</h3>
+        <div class="skills-list" id="shareSkills"></div>
+        <div class="skills-input-container">
+          <input type="text" id="shareInput" placeholder="Add a skill (e.g. HTML, CSS)">
+          <button onclick="addSkill('share')">Add</button>
+        </div>
+      </div>
+
+      <!-- Skills I Want to Learn -->
+      <div class="skills-section">
+        <h3>Skills I Want to Learn</h3>
+        <div class="skills-list" id="learnSkills"></div>
+        <div class="skills-input-container">
+          <input type="text" id="learnInput" placeholder="Add a skill (e.g. ReactJS, UI/UX)">
+          <button onclick="addSkill('learn')">Add</button>
+        </div>
+      </div>
+
+      <!-- Save and Cancel Buttons -->
+      <div class="save-buttons">
+        <button id="saveBtn" onclick="saveProfile()">Save Changes</button>
+        <button class="cancel-btn">
+          <a href="profile1.html" style="text-decoration:none;color:white;">Cancel</a>
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 Skill Swap. All rights reserved.</p>
+  </footer>
+
+  <script>
+    let profileImageData = "";
+
+    // Image Preview
+    document.getElementById("upload").addEventListener("change", function(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          document.getElementById("profileImage").src = e.target.result;
+          profileImageData = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    // Add Skill Function
+    function addSkill(type) {
+      const input = document.getElementById(type + "Input");
+      const list = document.getElementById(type + "Skills");
+      const skill = input.value.trim();
+
+      if (skill === "") return;
+
+      const skillTag = document.createElement("div");
+      skillTag.className = "skill-tag";
+      skillTag.innerHTML = `${skill} <span class="remove-btn" onclick="this.parentElement.remove()">×</span>`;
+
+      list.appendChild(skillTag);
+      input.value = "";
+    }
+
+    // Save Profile Function
+    function saveProfile() {
+      const about = document.getElementById("about").value.trim();
+      const username = document.getElementById("username").value.trim();
+      const age = document.getElementById("age").value.trim();
+      const tagline = document.getElementById("tagline").value.trim();
+
+      const shareSkills = Array.from(document.getElementById("shareSkills").children)
+        .map(s => s.textContent.replace("×", "").trim());
+      const learnSkills = Array.from(document.getElementById("learnSkills").children)
+        .map(s => s.textContent.replace("×", "").trim());
+
+      if (!username.startsWith("@")) {
+        alert("Username must start with '@'.");
+        return;
+      }
+
+      if (about.length > 250) {
+        alert("About Me section must be a maximum of 250 characters.");
+        return;
+      }
+
+      const profileData = {
+        username,
+        age,
+        tagline,
+        about,
+        shareSkills,
+        learnSkills,
+        image: document.getElementById("profileImage").src
+      };
+
+      // Save data to localStorage
+      localStorage.setItem("profileData", JSON.stringify(profileData));
+
+      // Success Message
+      alert("✅ Profile Updated Successfully!");
+
+      // Redirect to Display Page
+      window.location.href = "profile1.html";
+    }
+
+    // Load Saved Data Back into Fields
+    window.addEventListener("DOMContentLoaded", () => {
+      const data = JSON.parse(localStorage.getItem("profileData"));
+      if (data) {
+        document.getElementById("username").value = data.username || "";
+        document.getElementById("age").value = data.age || "";
+        document.getElementById("tagline").value = data.tagline || "";
+        document.getElementById("about").value = data.about || "";
+        if (data.image) document.getElementById("profileImage").src = data.image;
+
+        const shareList = document.getElementById("shareSkills");
+        const learnList = document.getElementById("learnSkills");
+        shareList.innerHTML = "";
+        learnList.innerHTML = "";
+
+        data.shareSkills?.forEach(skill => {
+          const div = document.createElement("div");
+          div.className = "skill-tag";
+          div.innerHTML = `${skill} <span class="remove-btn" onclick="this.parentElement.remove()">×</span>`;
+          shareList.appendChild(div);
+        });
+
+        data.learnSkills?.forEach(skill => {
+          const div = document.createElement("div");
+          div.className = "skill-tag";
+          div.innerHTML = `${skill} <span class="remove-btn" onclick="this.parentElement.remove()">×</span>`;
+          learnList.appendChild(div);
+        });
+      }
+    });
+
+document.addEventListener("DOMContentLoaded", () => {
+  const saveButton = document.getElementById("saveBtn");
+
+  saveButton.addEventListener("click", () => {
+    const username = document.getElementById("username").value.replace("@", "");
+    const profileData = {
+      username: document.getElementById("username").value,
+      age: document.getElementById("age").value,
+      tagline: document.getElementById("tagline").value,
+      about: document.getElementById("about").value,
+      image: document.getElementById("profileImage").src,
+      shareSkills: Array.from(document.querySelectorAll("#offerList div")).map(el => el.textContent),
+      learnSkills: Array.from(document.querySelectorAll("#learnList div")).map(el => el.textContent)
+    };
+
+    localStorage.setItem("profileData_" + username, JSON.stringify(profileData));
+    alert("Profile saved for @" + username + "!");
+  });
+});
+
+
+  </script>
+</body>
+</html>

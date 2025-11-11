@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dhruv | SkillSwap</title>
+  <link rel="stylesheet" href="display.css">
+</head>
+<body>
+
+<header class="main-header">
+  <div class="header-content">
+    <img src="logo.png" class="logo" alt="logo">
+    <div class="header-text">
+      <h1>Skill Swap</h1>
+      <p>Empowering learning through knowledge exchange.</p>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="profile-card">
+    <div class="profile-header">
+      <div class="profile-pic">
+        <img src="user3.jpg" alt="Babita">
+      </div>
+
+      <input type="text" value="@Babita" readonly>
+      <input type="number" value="22" readonly>
+      <input type="text" value="App Developer | Tech Enthusiast | Mentor" readonly>
+    </div>
+
+    <div class="about-section">
+      <h3>About Me</h3>
+      <textarea readonly>
+I specialize in Android app development and believe in creating impactful mobile experiences. 
+I’m on SkillSwap to share my Kotlin and Flutter expertise while learning cloud integration and backend APIs.
+      </textarea>
+    </div>
+
+    <div class="skills-section">
+      <h3>Skills I Offer</h3>
+      <div class="skills-list">
+        <div class="skill-tag">Android Development</div>
+        <div class="skill-tag">Kotlin</div>
+        <div class="skill-tag">Flutter</div>
+      </div>
+    </div>
+
+    <div class="skills-section">
+      <h3>Skills I Want to Learn</h3>
+      <div class="skills-list">
+        <div class="skill-tag">Firebase</div>
+        <div class="skill-tag">API Integration</div>
+        <div class="skill-tag">UI Animation</div>
+      </div>
+    </div>
+    <div class="swap-btn-container">
+  <button class="swap-btn" onclick="sendSwapRequest()">🤝 Request / Swap</button>
+  </div>
+  
+</main>
+
+<footer><p>© 2025 Skill Swap. All rights reserved.</p></footer>
+</body>
+</html>
+<script>
+  window.addEventListener("DOMContentLoaded", () => {
+    const username = "@dhruv"; // Change this for each user page
+
+    const profileData = JSON.parse(localStorage.getItem(username));
+    if (profileData) {
+      document.querySelector("#displayUsername").value = profileData.username;
+      document.querySelector("#displayAge").value = profileData.age;
+      document.querySelector("#displayTagline").value = profileData.tagline;
+      document.querySelector("#displayAbout").value = profileData.about;
+
+      const offerContainer = document.querySelector("#displayShareSkills");
+      const learnContainer = document.querySelector("#displayLearnSkills");
+
+      offerContainer.innerHTML = "";
+      learnContainer.innerHTML = "";
+
+      profileData.skillsOffer.forEach(skill => {
+        const div = document.createElement("div");
+        div.className = "skill-tag";
+        div.textContent = skill;
+        offerContainer.appendChild(div);
+      });
+
+      profileData.skillsLearn.forEach(skill => {
+        const div = document.createElement("div");
+        div.className = "skill-tag";
+        div.textContent = skill;
+        learnContainer.appendChild(div);
+      });
+    }
+  });
+</script>

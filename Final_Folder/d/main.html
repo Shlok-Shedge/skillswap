@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Skill Swap</title>
+  <link rel="stylesheet" href="main.css" />
+  <style>
+    /* Carousel styling inside main section */
+    .carousel {
+      position: relative;
+      width: 90%;
+      max-width: 1500px;
+      margin: 100px auto;
+      overflow: hidden;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.05);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+      padding: 20px 0;
+      margin-top: 300px;
+    }
+
+    .carousel-track {
+      display: flex;
+      width: max-content;
+      gap: 30px;
+      animation: scroll 18s linear infinite;
+      will-change: transform;
+    }
+
+    .carousel:hover .carousel-track {
+      animation-play-state: paused;
+    }
+
+    .card {
+      flex: 0 0 auto;
+      width: 250px;
+      border-radius: 12px;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.7);
+      transition: transform 0.3s ease;
+      text-align: center;
+      will-change: transform;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+    }
+
+    .card button {
+      margin-top: 10px;
+      background: #3b82f6;
+      color: #fff;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.2s ease;
+    }
+
+    .card button:hover {
+      background: #2563eb;
+    }
+
+    @keyframes scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    @media (max-width: 600px) {
+      .card {
+        width: 180px;
+        height: 140px;
+        font-size: 14px;
+      }
+    }
+
+    /* Accessibility: Stop animation for users who prefer reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      .carousel-track {
+        animation: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-container">
+      <img src="logo.png" alt="Skill Swap Logo" class="logo">
+      <div class="header-text">
+        <h1>Skill Swap</h1>
+        <p>Share what you know, learn what you love. No money, just mutual growth.</p>
+      </div>
+    </div>
+  </header>
+
+  <nav>
+    <div class="nav-left">
+      <a href="#">Home Page</a>
+      <a href="#">My Profile</a>
+    </div>
+  </nav>
+
+  <!-- Blurred background container -->
+  <div class="blur-bg"></div>
+  <div class="main">
+    <h1>Find People to Swap Skills With</h1>
+    <p>Connect with others, learn new things, and share what you know!</p>
+
+    <!-- Carousel Section -->
+    <div class="carousel">
+      <div class="carousel-track">
+        <div class="card">
+          <h3>Riya Sharma</h3>
+          <p><strong>Teaches:</strong> Graphic Design</p>
+          <p><strong>Wants to Learn:</strong> Web Development</p>
+          <button>Swap</button>
+        </div>
+
+        <div class="card">
+          <h3>Arjun Mehta</h3>
+          <p><strong>Teaches:</strong> Java Programming</p>
+          <p><strong>Wants to Learn:</strong> Video Editing</p>
+          <button>Request Swap</button>
+        </div>
+
+        <div class="card">
+          <h3>Sneha Patel</h3>
+          <p><strong>Teaches:</strong> UI/UX Design</p>
+          <p><strong>Wants to Learn:</strong> Data Analysis</p>
+          <button>Request Swap</button>
+        </div>
+
+        <div class="card">
+          <h3>Vikram Rao</h3>
+          <p><strong>Teaches:</strong> Photography</p>
+          <p><strong>Wants to Learn:</strong> Digital Marketing</p>
+          <button>Request Swap</button>
+        </div>
+
+        <div class="card">
+          <h3>Neha Desai</h3>
+          <p><strong>Teaches:</strong> Public Speaking</p>
+          <p><strong>Wants to Learn:</strong> C Programming</p>
+          <button>Request Swap</button>
+        </div>
+
+        <div class="card">
+          <h3>Karan Singh</h3>
+          <p><strong>Teaches:</strong> Guitar</p>
+          <p><strong>Wants to Learn:</strong> Video Editing</p>
+          <button>Request Swap</button>
+        </div>
+
+        <!-- Duplicate cards for infinite loop -->
+        <div class="card"><h3>Riya Sharma</h3><p><strong>Teaches:</strong> Graphic Design</p><p><strong>Wants to Learn:</strong> Web Development</p><button>Request Swap</button></div>
+        <div class="card"><h3>Arjun Mehta</h3><p><strong>Teaches:</strong> Java Programming</p><p><strong>Wants to Learn:</strong> Video Editing</p><button>Request Swap</button></div>
+        <div class="card"><h3>Sneha Patel</h3><p><strong>Teaches:</strong> UI/UX Design</p><p><strong>Wants to Learn:</strong> Data Analysis</p><button>Request Swap</button></div>
+        <div class="card"><h3>Vikram Rao</h3><p><strong>Teaches:</strong> Photography</p><p><strong>Wants to Learn:</strong> Digital Marketing</p><button>Request Swap</button></div>
+        <div class="card"><h3>Neha Desai</h3><p><strong>Teaches:</strong> Public Speaking</p><p><strong>Wants to Learn:</strong> Python Programming</p><button>Request Swap</button></div>
+        <div class="card"><h3>Karan Singh</h3><p><strong>Teaches:</strong> Guitar</p><p><strong>Wants to Learn:</strong> Video Editing</p><button>Request Swap</button></div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    © 2025 Skill Swap. All rights reserved.
+  </footer>
+</body>
+</html>

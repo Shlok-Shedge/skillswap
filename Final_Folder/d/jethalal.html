@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mani Reddy | SkillSwap</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="display.css">
+</head>
+<body>
+
+  <header class="main-header">
+    <div class="header-content">
+      <img src="logo.png" alt="SkillSwap Logo" class="logo">
+      <div class="header-text">
+        <h1>Skill Swap</h1>
+        <p>Share what you know, learn what you love. No money, just mutual growth.</p>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="profile-card">
+      <div class="profile-header">
+        <div class="profile-pic">
+          <img src="user1.jpg" alt="Jethalal">
+        </div>
+
+        <input type="text" value="@jethalal" readonly>
+        <input type="number" value="21" readonly>
+        <input type="text" value="Web Developer | Lifelong Learner | Tech Enthusiast" readonly>
+      </div>
+
+      <div class="about-section">
+        <h3>About Me</h3>
+        <textarea readonly>
+I’m a passionate web developer focused on creating modern, responsive, and interactive applications. 
+On SkillSwap, I teach web technologies like HTML, CSS, and JavaScript, and I’m learning UI/UX and ReactJS to strengthen my design skills.
+        </textarea>
+      </div>
+
+      <div class="skills-section">
+        <h3>Skills I Offer</h3>
+        <div class="skills-list">
+          <div class="skill-tag">HTML</div>
+          <div class="skill-tag">CSS</div>
+          <div class="skill-tag">JavaScript</div>
+          <div class="skill-tag">Frontend Development</div>
+        </div>
+      </div>
+
+      <div class="skills-section">
+        <h3>Skills I Want to Learn</h3>
+        <div class="skills-list">
+          <div class="skill-tag">ReactJS</div>
+          <div class="skill-tag">UI/UX Design</div>
+          <div class="skill-tag">Node.js</div>
+        </div>
+      </div>
+      <div class="swap-btn-container">
+  <button class="swap-btn" onclick="sendSwapRequest()">🤝 Request / Swap</button>
+    </div>
+    
+  </main>
+
+  <footer><p>© 2025 Skill Swap. All rights reserved.</p></footer>
+</body>
+</html>
+
+<script>
+  window.addEventListener("DOMContentLoaded", () => {
+    const username = "@manireddy"; // Change this for each user page
+
+    const profileData = JSON.parse(localStorage.getItem(username));
+    if (profileData) {
+      document.querySelector("#displayUsername").value = profileData.username;
+      document.querySelector("#displayAge").value = profileData.age;
+      document.querySelector("#displayTagline").value = profileData.tagline;
+      document.querySelector("#displayAbout").value = profileData.about;
+
+      const offerContainer = document.querySelector("#displayShareSkills");
+      const learnContainer = document.querySelector("#displayLearnSkills");
+
+      offerContainer.innerHTML = "";
+      learnContainer.innerHTML = "";
+
+      profileData.skillsOffer.forEach(skill => {
+        const div = document.createElement("div");
+        div.className = "skill-tag";
+        div.textContent = skill;
+        offerContainer.appendChild(div);
+      });
+
+      profileData.skillsLearn.forEach(skill => {
+        const div = document.createElement("div");
+        div.className = "skill-tag";
+        div.textContent = skill;
+        learnContainer.appendChild(div);
+      });
+    }
+  });
+</script>

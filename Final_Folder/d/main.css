@@ -1,0 +1,220 @@
+/* ---------------- General Page Setup ---------------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: rgba(0,0,0,0); /* ✅ Prevent black click flash */
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: url('homebackground.png') no-repeat center center fixed;
+  background-size: cover;
+  color: #333;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ---------------- Logo ---------------- */
+.logo {
+  width: 80px;
+  height: auto;
+  position: absolute;
+  top: 50%;
+  left: 20px;
+  transform: translateY(-50%);
+  pointer-events: none; /* ✅ Logo won’t trigger highlight */
+}
+
+/* ---------------- Header ---------------- */
+header {
+  background-color: #011436;
+  color: #fff;
+  padding: 20px 0;
+  text-align: center;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+.header-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-title {
+  font-size: 32px;
+  font-weight: bold;
+  color: #333;
+}
+
+/* ---------------- Navbar ---------------- */
+nav {
+  background: #1a2295c5;
+  padding: 18px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  position: fixed;
+  top: 117px;
+  width: 100%;
+  z-index: 999;
+}
+
+.nav-left a {
+  color: #fff;
+  margin-right: 15px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.nav-left a:hover {
+  text-decoration: underline;
+  color: #00bf72;
+}
+
+/* ---------------- Main Content ---------------- */
+.main {
+  text-align: center;
+  padding: 150px 20px 10px;
+}
+
+.main h1 {
+  margin-top: 50px;
+  margin-bottom: 10px;
+  color: black;
+}
+
+.main p {
+  color: black;
+  margin-bottom: 0px; 
+}
+
+/* ---------------- Profile Cards ---------------- */
+.profiles {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.card {
+  background: linear-gradient(to bottom right, #ffffff, #f4fdfb);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  width: 300px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  will-change: transform;
+  user-select: none;
+  -webkit-user-drag: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation; /* ✅ disables overlay highlight completely */
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* ✅ Full color fix — prevent black or dark overlay on click */
+.card:active,
+.card:focus,
+.card:visited {
+  background: linear-gradient(to bottom right, #ffffff, #f4fdfb) !important;
+  color: #007a7a !important;
+  outline: none !important;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Text inside cards */
+.card h3 {
+  margin-top: 0;
+  color: #007a7a;
+}
+
+.card p {
+  margin: 10px 0;
+  color: #444;
+}
+
+/* Buttons */
+.card button {
+  margin-top: 15px;
+  padding: 10px 15px;
+  background: linear-gradient(to right, #00a896, #00bf72);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  color: #fff;
+  font-weight: 600;
+  transition: background 0.3s ease;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.card button:hover {
+  background: linear-gradient(to right, #028090, #00a896);
+}
+
+/* ✅ Button color fix after click */
+.card button:active,
+.card button:focus,
+.card button:visited {
+  background: linear-gradient(to right, #00a896, #00bf72) !important;
+  color: #fff !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Remove default link behaviors */
+a,
+a:visited,
+a:active {
+  color: white !important;
+  text-decoration: none !important;
+  background: none !important;
+}
+
+/* ---------------- Footer ---------------- */
+footer {
+  background-color: #011436;
+  color: #fff;
+  text-align: center;
+  padding: 20px 0;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+/* ---------------- Responsive ---------------- */
+@media (max-width: 600px) {
+  .card {
+    width: 200px;
+  }
+
+  .main {
+    padding: 150px 10px;
+  }
+
+  .navbar {
+    flex-wrap: wrap;
+  }
+
+  .navbar a {
+    margin-bottom: 10px;
+  }
+}
